@@ -1,0 +1,19 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended"],
+    "jsRules": {},
+    "rules": {
+        "quotemark": [true, "single", "avoid-escape"],
+        "semicolon": [true, "never"],
+        "trailing-comma": [true],
+        "no-console": [false],
+        "variable-name": {
+            "options": [
+                "ban-keywords",
+                "check-format",
+                "allow-leading-underscore"
+            ]
+        }
+    },
+    "rulesDirectory": []
+}
