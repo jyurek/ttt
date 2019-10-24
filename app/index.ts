@@ -10,7 +10,7 @@ app.use(express.json())
 app.get('/', Games.viewAll)
 app.post('/', Games.create)
 app.get('/:id', Games.viewOne)
-app.post('/:id', Games.move)
+app.post('/:id', Games.makeMove)
 app.delete('/:id', Games.cancel)
 
 app.listen(port, () => {
