@@ -8,6 +8,13 @@
         "semicolon": [true, "never"],
         "trailing-comma": [true],
         "no-console": [false],
+        "ordered-imports": [
+            true,
+            {
+                "import-sources-order": "any",
+                "named-imports-order": "lowercase-last"
+            }
+        ],
         "variable-name": {
             "options": [
                 "ban-keywords",
