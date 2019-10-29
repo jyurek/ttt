@@ -4,7 +4,7 @@ import * as Games from './games'
 
 dotenv.config()
 const port = process.env.PORT
-const app = express()
+export const app = express()
 app.use(express.json())
 
 app.get('/', Games.viewAll)
