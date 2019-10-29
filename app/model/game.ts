@@ -1,4 +1,4 @@
-import { Either, Err } from './lib/types'
+import { Either, Err } from '../lib/types'
 
 type Blank = undefined
 const Blank: Blank = undefined
