@@ -1,18 +1,12 @@
 import 'mocha'
-import { app } from './setup.test'
+import { app, create, move } from './setup'
 
 import { ResponseCode } from '../lib/http'
 import { expect } from 'chai'
 
-const move = (id: string, x: number, y: number) =>
-    app()
-        .post(`/${id}`)
-        .send({ x, y })
-
 describe('draw', () => {
     it('happens when the board fills up', () => {
-        return app()
-            .post('/')
+        return create()
             .then((r) => move(r.body.id, 0, 0))
             .then((r) => move(r.body.id, 0, 1))
             .then((r) => move(r.body.id, 0, 2))
@@ -31,31 +25,12 @@ describe('draw', () => {
                 expect(response.body.winner).to.equal('draw')
             })
     })
-
-    it('prevents new moves afterwards', () => {
-        return app()
-            .post('/')
-            .then((r) => move(r.body.id, 0, 0))
-            .then((r) => move(r.body.id, 0, 1))
-            .then((r) => move(r.body.id, 0, 2))
-            .then((r) => move(r.body.id, 2, 0))
-            .then((r) => move(r.body.id, 2, 1))
-            .then((r) => move(r.body.id, 2, 2))
-            .then((r) => move(r.body.id, 1, 0))
-            .then((r) => move(r.body.id, 1, 1))
-            .then((r) => move(r.body.id, 1, 2))
-            .then((r) => move(r.body.id, 0, 0))
-            .then((response) => {
-                expect(response).to.have.status(422)
-            })
-    })
 })
 
 describe('winning', () => {
     describe('horizontally', () => {
         it('works 1st row', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 0))
                 .then((r) => move(r.body.id, 0, 1))
                 .then((r) => move(r.body.id, 1, 0))
@@ -72,8 +47,7 @@ describe('winning', () => {
         })
 
         it('works 2nd row', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 1))
                 .then((r) => move(r.body.id, 0, 2))
                 .then((r) => move(r.body.id, 1, 1))
@@ -90,8 +64,7 @@ describe('winning', () => {
         })
 
         it('works 3rd row', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 2))
                 .then((r) => move(r.body.id, 0, 1))
                 .then((r) => move(r.body.id, 1, 2))
@@ -110,8 +83,7 @@ describe('winning', () => {
 
     describe('vertically', () => {
         it('works 1st column', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 0))
                 .then((r) => move(r.body.id, 1, 0))
                 .then((r) => move(r.body.id, 0, 1))
@@ -128,8 +100,7 @@ describe('winning', () => {
         })
 
         it('works 2nd column', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 1, 0))
                 .then((r) => move(r.body.id, 0, 0))
                 .then((r) => move(r.body.id, 1, 1))
@@ -146,8 +117,7 @@ describe('winning', () => {
         })
 
         it('works 3rd column', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 2, 0))
                 .then((r) => move(r.body.id, 0, 0))
                 .then((r) => move(r.body.id, 2, 1))
@@ -166,8 +136,7 @@ describe('winning', () => {
 
     describe('diagonally', () => {
         it('works one way', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 0))
                 .then((r) => move(r.body.id, 0, 1))
                 .then((r) => move(r.body.id, 1, 1))
@@ -184,8 +153,7 @@ describe('winning', () => {
         })
 
         it('works the other', () => {
-            return app()
-                .post('/')
+            return create()
                 .then((r) => move(r.body.id, 0, 2))
                 .then((r) => move(r.body.id, 0, 1))
                 .then((r) => move(r.body.id, 1, 1))
