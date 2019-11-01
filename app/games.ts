@@ -36,7 +36,7 @@ const makeMove = (request: Request, response: Response) => {
                 break
         }
     } else {
-        response.status(ResponseCode.NotFound).send()
+        response.status(ResponseCode.NotFound).json({ error: true })
     }
 }
 

@@ -1,5 +1,5 @@
 import 'mocha'
-import { app, create, move, show, cancel } from './setup'
+import { app, cancel, create, move, show } from './setup'
 
 import { ResponseCode } from '../lib/http'
 import { expect } from 'chai'
@@ -16,7 +16,7 @@ describe('index', () => {
 })
 
 describe('create', () => {
-    it('generates a new game with new id', () => {
+    it('generates a new game with new id', async () => {
         return create().then(() =>
             create().then((response) => {
                 expect(response.body).to.eql({
@@ -36,7 +36,7 @@ describe('create', () => {
 })
 
 describe('show', () => {
-    it('returns the game we asked for', () => {
+    it('returns the game we asked for', async () => {
         return app()
             .get('/101')
             .then((response) => {
@@ -54,7 +54,7 @@ describe('show', () => {
             })
     })
 
-    it('returns a 404 if the game does not yet exist', () => {
+    it('returns a 404 if the game does not yet exist', async () => {
         return app()
             .get('/102')
             .then((response) => {
@@ -65,7 +65,7 @@ describe('show', () => {
 })
 
 describe('move', () => {
-    it('makes a move for X first', () => {
+    it('makes a move for X first', async () => {
         return move('100', 1, 1).then((response) => {
             expect(response.body).to.eql({
                 board: [
@@ -81,7 +81,7 @@ describe('move', () => {
         })
     })
 
-    it('then a move for O', () => {
+    it('then a move for O', async () => {
         return move('100', 0, 0).then((response) => {
             expect(response.body).to.eql({
                 board: [
@@ -96,10 +96,17 @@ describe('move', () => {
             expect(response).to.have.status(ResponseCode.OK)
         })
     })
+
+    it('returns a 404 if the game does not yet exist', async () => {
+        return move('lolthiscannotexist', 0, 0).then((response) => {
+            expect(response.body.error).to.equal(true)
+            expect(response).to.have.status(ResponseCode.NotFound)
+        })
+    })
 })
 
 describe('cancel', () => {
-    it('deletes a game in progress', () => {
+    it('deletes a game in progress', async () => {
         return create().then((r) =>
             cancel(r.body.id)
                 .then((cr) => {

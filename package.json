@@ -8,7 +8,7 @@
         "build": "tsc",
         "prestart": "npm run build",
         "start": "node .",
-        "test": "mocha --exit -r ts-node/register ./**/*.test.ts"
+        "test": "nyc mocha --exit -r ts-node/register -r source-map-support/register --recursive ./**/*.test.ts"
     },
     "author": "",
     "license": "UNLICENSED",
@@ -25,9 +25,26 @@
         "chai": "^4.2.0",
         "chai-http": "^4.3.0",
         "mocha": "^6.2.2",
+        "nyc": "^14.1.1",
         "prettier": "^1.18.2",
+        "source-map-support": "^0.5.16",
         "ts-node": "^8.4.1",
         "tslint": "^5.20.0",
         "typescript": "^3.6.4"
+    },
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "**/*.d.ts",
+            "**/__tests__/**",
+            "coverage"
+        ],
+        "reporter": [
+            "html"
+        ],
+        "all": true
     }
 }
