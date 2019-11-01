@@ -10,7 +10,8 @@
         "start": "node .",
         "test": "nyc mocha --exit -r ts-node/register -r source-map-support/register --recursive ./**/*.test.ts"
     },
-    "author": "",
+    "author": "Jon Yurek <jyurek@gmail.com>",
+    "repository": "https://github.com/jyurek/ttt.git",
     "license": "UNLICENSED",
     "dependencies": {
         "dotenv": "^8.2.0",

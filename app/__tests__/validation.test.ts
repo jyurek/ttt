@@ -1,5 +1,5 @@
 import 'mocha'
-import { app, move, create } from './setup'
+import { app, create, move } from './setup'
 
 import { ResponseCode } from '../lib/http'
 import { expect } from 'chai'
